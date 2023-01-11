@@ -18,7 +18,7 @@ def checkData(data):
     return True
 
 # Récupération des données du JSON
-configuration = getDataFromJson("test.json")
+configuration = getDataFromJson("JSON/test.json")
 print(json.dumps(configuration, indent=2))
 
 # Vérification des données
