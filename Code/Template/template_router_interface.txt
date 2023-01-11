@@ -1,0 +1,5 @@
+!
+interface {{ name }}
+ ip address {{ ip }} {{ mask }}
+ no shutdown
+!

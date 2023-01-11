@@ -1,3 +1,43 @@
 {
-    
+    "globals": {},
+    "routers": [
+        {
+            "name": "R1",
+            "numero": "1",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "ip": "192.168.1.1",
+                    "mask": 32
+                },
+                {
+                    "name": "g2/0",
+                    "ip": "192.168.2.1",
+                    "mask": 32
+                }
+            ]
+        },
+        {
+            "name": "R2",
+            "numero": "2",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "ip": "192.168.1.2",
+                    "mask": 32
+                }
+            ]
+        },
+        {
+            "name": "R3",
+            "numero": "3",
+            "interface": [
+                {
+                    "name": "g2/0",
+                    "ip": "192.168.2.2",
+                    "mask": 32
+                }
+            ]
+        }
+    ]
 }
