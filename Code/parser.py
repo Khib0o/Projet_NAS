@@ -36,12 +36,14 @@ with open("Template/template_router_interface.txt") as file:
 with open("Template/template_router_end.txt") as file:
     endTemplate = Template(file.read())
 
-# Rendu Template basic
+# Rendu Template End
 rendered_end = endTemplate.render()
 
+# Rendu Template Basic et Interface pour chaque router
 for router in configuration["routers"]:
     rendered_base = baseTemplate.render(name=router["name"])   
     configsRouter = []
+    # Génération des configurations pour chaque interface
     for interface in router["interface"]:
         rendered_interface = interfaceTemplate.render(
             name=interface["name"],
@@ -49,6 +51,7 @@ for router in configuration["routers"]:
             mask="255.255.255.0")
         configsRouter.append(rendered_interface)
     
+    # Ecriture des configurations pour chaque routeur
     with open("Config/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
         config_file.write(rendered_base)
         for config in configsRouter:
