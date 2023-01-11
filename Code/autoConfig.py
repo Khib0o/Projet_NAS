@@ -4,8 +4,6 @@ import sys
 from jinja2 import Template
 
 # Récupération des données
-
-
 def getDataFromJson(nameJson):
     # ouvrir le fichier JSON
     if os.path.exists(nameJson):
@@ -16,9 +14,8 @@ def getDataFromJson(nameJson):
         print("le fichier test.json n'existe pas")
 
 # Validation des données
-def checkData(date):
+def checkData(data):
     return True
-
 
 # Récupération des données du JSON
 configuration = getDataFromJson("test.json")
@@ -41,7 +38,7 @@ rendered_end = endTemplate.render()
 
 # Rendu Template Basic et Interface pour chaque router
 for router in configuration["routers"]:
-    rendered_base = baseTemplate.render(name=router["name"])   
+    rendered_base = baseTemplate.render(name=router["name"])
     configsRouter = []
     # Génération des configurations pour chaque interface
     for interface in router["interface"]:
@@ -50,7 +47,7 @@ for router in configuration["routers"]:
             ip=interface["ip"],
             mask="255.255.255.0")
         configsRouter.append(rendered_interface)
-    
+
     # Ecriture des configurations pour chaque routeur
     with open("Config/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
         config_file.write(rendered_base)
