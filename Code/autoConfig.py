@@ -15,7 +15,6 @@ def get_data_from_json(name_json):
 
 # Validation des données
 def check_data(data):
-    data = data + 1
     return True
 
 # Récupération des données du JSON
@@ -50,7 +49,7 @@ for router in configuration["routers"]:
         configsRouter.append(rendered_interface)
 
     # Ecriture des configurations pour chaque routeur
-    with open("Config/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
+    with open("Configuration/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
         config_file.write(rendered_base)
         for config in configsRouter:
             config_file.write(config)

@@ -1,10 +1,9 @@
 import os
 import json
 import sys
+import shutil
 
 # Récupération des données de la configuration du projet gns3
-
-
 def get_data_from_json(name_json):
     # ouvrir le fichier JSON
     if os.path.exists(name_json):
@@ -19,7 +18,7 @@ def get_data_from_json(name_json):
 configuration_gns3 = get_data_from_json("Correspondance/test.json")
 
 # Initialisation des constancte
-path_folder = "Config"
+path_folder = "Configuration"
 
 # Vérification avant déplacement
 counter_file = 0
@@ -51,6 +50,16 @@ for name_file in os.listdir(path_folder):
     if os.path.isfile(os.path.join(path_folder, name_file)):
         print("Déplacement de : " + name_file)
         for router in configuration_gns3:
-            if router["name_file"] == name_file:
-                print("Trouvé")
-                os.replace(router["path_file"]+name_file, path_folder+name_file)
+            # Recherche du nom du routeur dans le fichier de configuration existant
+            find = False
+            with open(path_folder+'/'+name_file, "r") as f:
+                for line in f:
+                    words = line.split()
+                    if "hostname" in words:
+                        name_router = words[words.index("hostname")+1]
+                        if router["label_router"] == name_router and router["name_file"] == name_file:
+                            print("Trouvé")
+                            find = True
+            if find:
+                # os.replace(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
+                shutil.copy(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
