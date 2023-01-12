@@ -1,17 +1,26 @@
 [
     {
-        "nom": "381a864a-b28e-4211-9bf1-7c103975da7f",
-        "numero": "2",
-        "label": ""
+        "name_folder":"381a864a-b28e-4211-9bf1-7c103975da7f",
+        "path_folder":"C:/Users/colin/GNS3/projects/test/project-files/dynamips",
+        "name_file":"i2_startup-config.cfg",
+        "path_file":"C:/Users/colin/GNS3/projects/test/project-files/dynamips/381a864a-b28e-4211-9bf1-7c103975da7f/configs",
+        "number_router":"2",
+        "label_router":"R2"
     },
     {
-        "nom": "746d55d5-1963-48bf-86b3-42212abc4d39",
-        "numero": "3",
-        "label": ""
+        "name_folder":"746d55d5-1963-48bf-86b3-42212abc4d39",
+        "path_folder":"C:/Users/colin/GNS3/projects/test/project-files/dynamips",
+        "name_file":"i3_startup-config.cfg",
+        "path_file":"C:/Users/colin/GNS3/projects/test/project-files/dynamips/746d55d5-1963-48bf-86b3-42212abc4d39/configs",
+        "number_router":"3",
+        "label_router":"R3"
     },
     {
-        "nom": "d146a07c-9a9d-4a5d-8337-2354df6f0f23",
-        "numero": "1",
-        "label": ""
+        "name_folder":"d146a07c-9a9d-4a5d-8337-2354df6f0f23",
+        "path_folder":"C:/Users/colin/GNS3/projects/test/project-files/dynamips",
+        "name_file":"i1_startup-config.cfg",
+        "path_file":"C:/Users/colin/GNS3/projects/test/project-files/dynamips/d146a07c-9a9d-4a5d-8337-2354df6f0f23/configs",
+        "number_router":"1",
+        "label_router":"R1"
     }
 ]

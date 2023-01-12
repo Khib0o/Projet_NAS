@@ -4,25 +4,26 @@ import sys
 from jinja2 import Template
 
 # Récupération des données
-def getDataFromJson(nameJson):
+def get_data_from_json(name_json):
     # ouvrir le fichier JSON
-    if os.path.exists(nameJson):
-        with open(nameJson, "r") as json_file:
+    if os.path.exists(name_json):
+        with open(name_json, "r") as json_file:
             data = json.load(json_file)
         return data
     else:
         print("le fichier test.json n'existe pas")
 
 # Validation des données
-def checkData(data):
+def check_data(data):
+    data = data + 1
     return True
 
 # Récupération des données du JSON
-configuration = getDataFromJson("JSON/test.json")
+configuration = get_data_from_json("JSON/test.json")
 print(json.dumps(configuration, indent=2))
 
 # Vérification des données
-if not checkData(configuration):
+if not check_data(configuration):
     sys.exit()
 
 # Création des Template
