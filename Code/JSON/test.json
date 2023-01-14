@@ -18,7 +18,10 @@
             ],
             "bgpConfig": {
                 "ASnumber": "1",
-                "neighbors": ["2","3"]
+                "neighbors": [
+                    "2",
+                    "3"
+                ]
             }
         },
         {
@@ -42,6 +45,40 @@
                     "mask": 32
                 }
             ]
+        },
+        {
+            "name": "R4",
+            "numero": "4",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "ip": "192.168.3.1",
+                    "mask": "32"
+                }
+            ]
+        },
+        {
+            "name": "R5",
+            "numero": "5",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "ip": "192.168.3.2",
+                    "mask": "32"
+                },
+                {
+                    "name": "g2/0",
+                    "ip": "192.168.2.3",
+                    "mask": "32"
+                }
+            ],
+            "bgpConfig": {
+                "ASnumber": "1",
+                "neighbors": [
+                    "1",
+                    "2"
+                ]
+            }
         }
     ]
 }

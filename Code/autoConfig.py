@@ -62,7 +62,6 @@ for router in configuration["routers"]:
         configsRouter.append(rendered_interface)
     if "bgpConfig" in router:
         print("bgpConfig exists "+router["name"])
-        print(bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"]))
         configsRouter.append(bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"]))
     else:
         print("bgpConfig doesn't exists "+router["name"])
