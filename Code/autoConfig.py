@@ -30,9 +30,16 @@ def bgp(asnumber,neighbors):
     return txt
 
 
+
+
+networkIpsCounter={}
+networks={}
+
+
+
 # Récupération des données du JSON
 configuration = get_data_from_json("JSON/test.json")
-print(json.dumps(configuration, indent=2))
+#print(json.dumps(configuration, indent=2))
 
 # Vérification des données
 if not check_data(configuration):
@@ -49,16 +56,32 @@ with open("Template/template_router_end.txt") as file:
 # Rendu Template End
 rendered_end = endTemplate.render()
 
+
+for network in configuration["globals"]["networks"]:#prépare à compter les ips déja paramétrées
+    networkIpsCounter[network["name"]]=0
+    networks[network["name"]]=network
+
+print(networks)
+
 # Rendu Template Basic et Interface pour chaque router
 for router in configuration["routers"]:
     rendered_base = baseTemplate.render(name=router["name"])
     configsRouter = []
     # Génération des configurations pour chaque interface
     for interface in router["interface"]:
-        rendered_interface = interfaceTemplate.render(
-            name=interface["name"],
-            ip=interface["ip"],
-            mask="255.255.255.0")
+        if interface["name"] == "loopback" : 
+            rendered_interface = interfaceTemplate.render(
+                name=interface["name"],
+                ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
+                mask=32
+            )  
+        else :
+            networkIpsCounter[interface["network"]]=+1
+            rendered_interface = interfaceTemplate.render(
+                name=interface["name"],
+                ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                mask=networks[interface["network"]]["mask"]
+            )
         configsRouter.append(rendered_interface)
     if "bgpConfig" in router:
         print("bgpConfig exists "+router["name"])
@@ -72,4 +95,9 @@ for router in configuration["routers"]:
         for config in configsRouter:
             config_file.write(config)
         config_file.write(rendered_end)
+
+
+
+
+
 
