@@ -71,7 +71,7 @@ for router in configuration["routers"]:
     for interface in router["interface"]:
         if interface["name"] == "loopback" : 
             rendered_interface = interfaceTemplate.render(
-                name=interface["name"],
+                name="loopback 0",
                 ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
                 mask=32
             )  
