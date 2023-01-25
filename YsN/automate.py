@@ -44,18 +44,21 @@ class Router:
         for interface in self.input["Routers"][self.name]["ints"]:
             # print(interface)
             n = self.input["Links"][interface["link"]][self.name]
-            ints.append(Interface(interface["link"],n,interface["IP"],interface["mask_l"],interface["OSPF"]))
+            if not "VPN" in interface.keys():
+                interface["VPN"]=False
+            ints.append(Interface(interface["link"],n,interface["IP"],interface["mask_l"],interface["OSPF"],interface["VPN"]))
         return ints
 
 
 class Interface:
-    def __init__(self, link, name, ip, mask_l,OSPF):
+    def __init__(self, link, name, ip, mask_l,OSPF,VPN):
         self.link       = link
         self.name       = name
         self.ip         = ip
         self.mask_l     = mask_l
         self.mask       = self.mask(self.mask_l)
         self.OSPF       = OSPF
+        self.VPN        = VPN
 
     def mask(self,l):
             s = '1'*l

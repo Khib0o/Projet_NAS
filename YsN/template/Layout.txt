@@ -24,8 +24,9 @@ line aux 0
  privilege level 15
  no login
 !
-{% block OSPF %}{% endblock %}!
-{% block BGP %}{% endblock %}!
-{% block VRF %}{% endblock %}!
-
+{% block interfaces %}{% endblock %}!
+{% block OSPF %}{% endblock %}
+{% block BGP %}{% endblock %}
+{% block vpnv4 %}{% endblock %}
+{% block VRF %}{% endblock %}
 end
