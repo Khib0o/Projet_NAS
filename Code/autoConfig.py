@@ -30,12 +30,19 @@ def bgp(asnumber,neighbors):
     return txt
 
 
+# config vrf
+def vrf(name,routeTarget):
+    txt="vrf definition "+name+"\n"
+    txt+=" rd "+routeTarget+":"+routeTarget+"\n"
+    txt+=" route-target both "+routeTarget+":"+routeTarget+"\n"
+    txt+=" address-family ipv4\n"
+    txt+=" exit-address-family\n"
+    txt+="!\n"
+    return txt
 
 
 networkIpsCounter={}
 networks={}
-
-
 
 # Récupération des données du JSON
 configuration = get_data_from_json("JSON/test.json")
@@ -83,11 +90,18 @@ for router in configuration["routers"]:
                 mask=networks[interface["network"]]["mask"]
             )
         configsRouter.append(rendered_interface)
+
     if "bgpConfig" in router:
         print("bgpConfig exists "+router["name"])
         configsRouter.append(bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"]))
     else:
         print("bgpConfig doesn't exists "+router["name"])
+
+    if "vrfConfig" in router:
+        print("vrfConfig exists "+router["name"])
+        configsRouter.append(vrf(router["vrfConfig"]["name"],router["vrfConfig"]["routeTarget"]))
+    else:
+        print("vrfConfig doesn't exists "+router["name"])
 
     # Ecriture des configurations pour chaque routeur
     with open("Configuration/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
