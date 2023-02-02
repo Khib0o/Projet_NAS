@@ -4,12 +4,12 @@
             {
                 "name": "client1",
                 "ip": "192.168.1.",
-                "mask": 24
+                "mask": "24"
             },
             {
                 "name": "coeur",
                 "ip": "192.168.2.",
-                "mask": 24
+                "mask": "24"
             },
             {
                 "name": "client2",
@@ -25,7 +25,12 @@
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client1"
+                    "network": "client1",
+                    "vrfConfig": {
+                        "name": "VPN1",
+                        "routeDistinguisher": "1:1",
+                        "routeTarget": "1:1"
+                    }
                 },
                 {
                     "name": "g2/0",
@@ -38,7 +43,12 @@
                     "2",
                     "3"
                 ]
+            },
+            "ospfConfig":{
+                "PID":"42",
+                "area":"1"
             }
+            
         },
         {
             "name": "R2",

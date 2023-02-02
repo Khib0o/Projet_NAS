@@ -29,12 +29,18 @@ def bgp(asnumber,neighbors):
     txt+="!\n"
     return txt
 
+def ospf(pid,loopback):
+    txt="router ospf "+pid+"\n"
+    txt+=" router-id "+loopback+"\n"
+    txt+=" mpls ldp autoconfig\n"
+    txt+="!\n"
+    return txt
 
 # config vrf
-def vrf(name,routeTarget):
+def vrf(name,routeDistinguisher,routeTarget):
     txt="vrf definition "+name+"\n"
-    txt+=" rd "+routeTarget+":"+routeTarget+"\n"
-    txt+=" route-target both "+routeTarget+":"+routeTarget+"\n"
+    txt+=" rd "+routeDistinguisher+"\n"
+    txt+=" route-target both "+routeTarget+"\n"
     txt+=" address-family ipv4\n"
     txt+=" exit-address-family\n"
     txt+="!\n"
@@ -57,6 +63,8 @@ with open("Template/template_router_basic.txt") as file:
     baseTemplate = Template(file.read())
 with open("Template/template_router_interface.txt") as file:
     interfaceTemplate = Template(file.read())
+with open("Template/template_router_vrfinterface.txt") as file:
+    vrfinterfaceTemplate = Template(file.read())
 with open("Template/template_router_end.txt") as file:
     endTemplate = Template(file.read())
 
@@ -70,10 +78,12 @@ for network in configuration["globals"]["networks"]:#prépare à compter les ips
 
 print(networks)
 
+
 # Rendu Template Basic et Interface pour chaque router
 for router in configuration["routers"]:
     rendered_base = baseTemplate.render(name=router["name"])
     configsRouter = []
+    loopback=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
     # Génération des configurations pour chaque interface
     for interface in router["interface"]:
         if interface["name"] == "loopback" : 
@@ -82,13 +92,30 @@ for router in configuration["routers"]:
                 ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
                 mask=32
             )  
-        else :
+        elif "vrfConfig" not in interface:
             networkIpsCounter[interface["network"]]=+1
             rendered_interface = interfaceTemplate.render(
                 name=interface["name"],
                 ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
                 mask=networks[interface["network"]]["mask"]
             )
+        elif "vrfConfig" in interface:
+            networkIpsCounter[interface["network"]]=+1
+            rendered_interface = vrfinterfaceTemplate.render(
+                VRFname=interface["vrfConfig"]["name"],
+                name=interface["name"],
+                ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                mask=networks[interface["network"]]["mask"],
+                PID = router["ospfConfig"]["PID"],
+                area = router["ospfConfig"]["area"]
+            )
+
+
+        if "vrfConfig" in interface:
+            print("vrfConfig exists "+interface["name"])
+            configsRouter.append(vrf(interface["vrfConfig"]["name"],interface["vrfConfig"]["routeDistinguisher"],interface["vrfConfig"]["routeTarget"]))
+        else:
+            print("vrfConfig doesn't exists "+router["name"])
         configsRouter.append(rendered_interface)
 
     if "bgpConfig" in router:
@@ -97,11 +124,12 @@ for router in configuration["routers"]:
     else:
         print("bgpConfig doesn't exists "+router["name"])
 
-    if "vrfConfig" in router:
-        print("vrfConfig exists "+router["name"])
-        configsRouter.append(vrf(router["vrfConfig"]["name"],router["vrfConfig"]["routeTarget"]))
+    if "ospfConfig" in router:
+        print("ospfConfig exists "+router["name"]+"\n")
+        loopback=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"]
+        configsRouter.append(ospf(router["ospfConfig"]["PID"],loopback))
     else:
-        print("vrfConfig doesn't exists "+router["name"])
+        print("ospfConfig doesn't exists "+router["name"])
 
     # Ecriture des configurations pour chaque routeur
     with open("Configuration/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
