@@ -134,6 +134,28 @@
                     "3"
                 ]
             }
+        },
+        {
+            "name": "R7",
+            "numero": "7",
+            "interface": [
+                {
+                    "name": "loopback",
+                    "ospf": {
+                        "ospfArea": "1"
+                    }
+                },
+                {
+                    "name": "g1/0",
+                    "network": "coeur",
+                    "ospf": {
+                        "ospfArea": "1"
+                    }
+                }
+            ],
+            "ospf": {
+                "ospfNum": "42"
+            }
         }
     ]
 }

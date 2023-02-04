@@ -29,8 +29,21 @@ def bgp(asnumber,neighbors):
     txt+="!\n"
     return txt
 
+def ipconfig(name,ip,mask,ospfNum,ospfArea):
+    txt="interface "+name+"\n"
+    txt+="ip address "+ip+" "+mask+"\n"
+    if ospfNum!=-1:
+        txt+="ip ospf "+ospfNum+" area "+ospfArea+"\n"
+    txt+="no shutdown\n"
+    txt+="!\n"
+    return txt
 
-
+def ospfConfig(ospfNum,rId):
+    txt="router ospf "+ospfNum+"\n"
+    txt+="router-id "+rId+"."+rId+"."+rId+"."+rId+"\n"
+    txt+="mpls ldp autoconfig\n"
+    txt+="!\n"
+    return txt
 
 networkIpsCounter={}
 networks={}
@@ -66,26 +79,39 @@ print(networks)
 # Rendu Template Basic et Interface pour chaque router
 for router in configuration["routers"]:
     rendered_base = baseTemplate.render(name=router["name"])
-    configsRouter = []
+    configsRouter = ""
     # Génération des configurations pour chaque interface
     for interface in router["interface"]:
         if interface["name"] == "loopback" : 
-            rendered_interface = interfaceTemplate.render(
-                name="loopback 0",
-                ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
-                mask=32
-            )  
+            name="loopback 0"
+            ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"]
+            mask=32
+            ospfNum=-1
+            ospfArea=-1
+            if "ospf" in interface:
+                ospfNum=router["ospf"]["ospfNum"]
+                ospfArea=interface["ospf"]["ospfArea"]     
         else :
             networkIpsCounter[interface["network"]]=+1
-            rendered_interface = interfaceTemplate.render(
-                name=interface["name"],
-                ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
-                mask=networks[interface["network"]]["mask"]
-            )
-        configsRouter.append(rendered_interface)
+            name=interface["name"]
+            ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]])
+            mask=networks[interface["network"]]["mask"]
+            ospfNum=-1
+            ospfArea=-1
+            if "ospf" in interface:
+                ospfNum = router["ospf"]["ospfNum"]
+                ospfArea = interface["ospf"]["ospfArea"]
+        print(name)
+        print(ip)
+        print(mask)
+        print(ospfNum)
+        print(ospfArea)
+        configsRouter+=ipconfig(str(name),str(ip),str(mask),str(ospfNum),str(ospfArea))
+    if "ospf" in router:
+        configsRouter+=ospfConfig(router["ospf"]["ospfNum"],router["numero"])
     if "bgpConfig" in router:
         print("bgpConfig exists "+router["name"])
-        configsRouter.append(bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"]))
+        configsRouter+=bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"])
     else:
         print("bgpConfig doesn't exists "+router["name"])
 
