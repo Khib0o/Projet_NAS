@@ -1,0 +1,6 @@
+interface {{ name }}
+ ip address {{ ip }} {{ mask }}
+ ip ospf {{ PID }} area {{ area }}
+ no shutdown
+!
+

@@ -46,6 +46,16 @@ def vrf(name,routeDistinguisher,routeTarget):
     txt+="!\n"
     return txt
 
+def vrfFamily(name,client,networks,number):
+    txt="address-family ipv4 vrf "+name+"\n"
+    for nets in networks:
+        if nets["name"]==client:
+            txt+=" neighbor "+nets["ip"]+number+" remote-as "+nets["bgpArea"]+"\n"
+            txt+=" neighbor "+nets["ip"]+number+" activate\n"
+    txt+="exit-address-family\n"
+    txt+="!\n"
+    return txt
+
 
 networkIpsCounter={}
 networks={}
@@ -63,6 +73,8 @@ with open("Template/template_router_basic.txt") as file:
     baseTemplate = Template(file.read())
 with open("Template/template_router_interface.txt") as file:
     interfaceTemplate = Template(file.read())
+with open("Template/template_router_interfaceOSPF.txt") as file:
+    interfaceOSPFTemplate = Template(file.read())
 with open("Template/template_router_vrfinterface.txt") as file:
     vrfinterfaceTemplate = Template(file.read())
 with open("Template/template_router_end.txt") as file:
@@ -77,6 +89,7 @@ for network in configuration["globals"]["networks"]:#prépare à compter les ips
     networks[network["name"]]=network
 
 print(networks)
+print(configuration)
 
 
 # Rendu Template Basic et Interface pour chaque router
@@ -94,11 +107,22 @@ for router in configuration["routers"]:
             )  
         elif "vrfConfig" not in interface:
             networkIpsCounter[interface["network"]]=+1
-            rendered_interface = interfaceTemplate.render(
-                name=interface["name"],
-                ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
-                mask=networks[interface["network"]]["mask"]
-            )
+
+            if "ospfConfig" not in router:
+                rendered_interface = interfaceTemplate.render(
+                    name=interface["name"],
+                    ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                    mask=networks[interface["network"]]["mask"]
+                )
+            else:
+                rendered_interface = interfaceOSPFTemplate.render(
+                    name=interface["name"],
+                    ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                    mask=networks[interface["network"]]["mask"],
+                    PID = router["ospfConfig"]["PID"],
+                    area = router["ospfConfig"]["area"]
+                )
+
         elif "vrfConfig" in interface:
             networkIpsCounter[interface["network"]]=+1
             rendered_interface = vrfinterfaceTemplate.render(
@@ -114,6 +138,7 @@ for router in configuration["routers"]:
         if "vrfConfig" in interface:
             print("vrfConfig exists "+interface["name"])
             configsRouter.append(vrf(interface["vrfConfig"]["name"],interface["vrfConfig"]["routeDistinguisher"],interface["vrfConfig"]["routeTarget"]))
+            configsRouter.append(vrfFamily(interface["vrfConfig"]["name"],interface["network"],configuration["globals"]["networks"],str(networkIpsCounter[interface["network"]]+1)))
         else:
             print("vrfConfig doesn't exists "+router["name"])
         configsRouter.append(rendered_interface)
