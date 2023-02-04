@@ -1,0 +1,58 @@
+{
+    "routers": [
+        {
+            "name": "R1",
+            "classe": "P",
+            "links": [
+                1
+            ]
+        },
+        {
+            "name": "R2",
+            "classe": "P",
+            "links": [
+                1
+            ]
+        },
+        {
+            "name": "R3",
+            "classe": "PE",
+            "links": [
+                2,
+                3,
+                5
+            ]
+        },
+        {
+            "name": "R4",
+            "classe": "PE",
+            "links": [
+                2,
+                4,
+                6
+            ]
+        },
+        {
+            "name": "R5",
+            "classe": "PE",
+            "links": [
+                3,
+                4
+            ],
+            "VPNs": [
+                [
+                    3,
+                    6
+                ]
+            ]
+        },
+        {
+            "name": "R8",
+            "classe": "PE",
+            "links": [
+                5,
+                6
+            ]
+        }
+    ]
+}

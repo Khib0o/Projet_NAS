@@ -101,11 +101,7 @@ for router in configuration["routers"]:
             if "ospf" in interface:
                 ospfNum = router["ospf"]["ospfNum"]
                 ospfArea = interface["ospf"]["ospfArea"]
-        print(name)
-        print(ip)
-        print(mask)
-        print(ospfNum)
-        print(ospfArea)
+
         configsRouter+=ipconfig(str(name),str(ip),str(mask),str(ospfNum),str(ospfArea))
     if "ospf" in router:
         configsRouter+=ospfConfig(router["ospf"]["ospfNum"],router["numero"])

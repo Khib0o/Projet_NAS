@@ -15,6 +15,11 @@
                 "name": "client2",
                 "ip": "192.168.3.",
                 "mask": "24"
+            },
+            {
+                "name": "client3",
+                "ip": "192.168.4",
+                "mask": "24"
             }
         ]
     },
@@ -151,6 +156,25 @@
                     "ospf": {
                         "ospfArea": "1"
                     }
+                }
+            ],
+            "ospf": {
+                "ospfNum": "42"
+            }
+        },
+        {
+            "name": "R8",
+            "numero": "8",
+            "interface": [
+                {
+                    "name": "loopback",
+                    "ospf": {
+                        "ospfArea": "1"
+                    }
+                },
+                {
+                    "name": "g0/1",
+                    "network": "client3"
                 }
             ],
             "ospf": {
