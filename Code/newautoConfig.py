@@ -90,7 +90,7 @@ rendered_end = endTemplate.render()
 #     networkIpsCounter[network["name"]]=0
 #     networks[network["name"]]=network
 
-
+#On créé un dictionnaire qui a pour clé chacun des liens et valeur le nombre de routeurs à qui on a donné un adresse dans le ss-réseau correspondant
 ip_counter = {}
 for router in configuration["routers"]:
     for link in router["links"]:
@@ -132,6 +132,7 @@ for router in configuration["routers"]:
             configsRouter.append(rendered_interface)
             interface += 1
 
+    #Pareil pour les PE/P
 
     else:
         rendered_interface = interfaceOSPFTemplate.render(
