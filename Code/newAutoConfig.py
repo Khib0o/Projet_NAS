@@ -1,0 +1,212 @@
+import json
+import os
+import sys
+from jinja2 import Template
+
+# Récupération des données
+def get_data_from_json(name_json):
+    # ouvrir le fichier JSON
+    if os.path.exists(name_json):
+        with open(name_json, "r") as json_file:
+            data = json.load(json_file)
+        return data
+    else:
+        print("le fichier test.json n'existe pas")
+
+# Validation des données
+def check_data(data):
+    return True
+
+# config bgp
+def bgp(asnumber,neighbors):
+    txt="router bgp "+asnumber+"\n"
+    for neighbor in neighbors:
+        txt+=" neighbor "+neighbor+"."+neighbor+"."+neighbor+"."+neighbor+" remote-as "+asnumber+"\n"
+        txt+=" neighbor "+neighbor+"."+neighbor+"."+neighbor+"."+neighbor+" update-source Loopback0\n"
+    txt+=" no auto-summary\n !\n address-family vpnv4\n"
+    for neighbor in neighbors:
+        txt+="  neighbor "+neighbor+"."+neighbor+"."+neighbor+"."+neighbor+" activate\n"
+    txt+="!\n"
+    return txt
+
+def ospf(pid,loopback):
+    txt="router ospf "+pid+"\n"
+    txt+=" router-id "+loopback+"\n"
+    txt+=" mpls ldp autoconfig\n"
+    txt+="!\n"
+    return txt
+
+# config vrf
+def vrf(name,routeDistinguisher,routeTarget):
+    txt="vrf definition "+name+"\n"
+    txt+=" rd "+routeDistinguisher+"\n"
+    txt+=" route-target both "+routeTarget+"\n"
+    txt+=" address-family ipv4\n"
+    txt+=" exit-address-family\n"
+    txt+="!\n"
+    return txt
+
+def vrfFamily(name,client,networks,number):
+    txt="address-family ipv4 vrf "+name+"\n"
+    for nets in networks:
+        if nets["name"]==client:
+            txt+=" neighbor "+nets["ip"]+number+" remote-as "+nets["bgpArea"]+"\n"
+            txt+=" neighbor "+nets["ip"]+number+" activate\n"
+    txt+="exit-address-family\n"
+    txt+="!\n"
+    return txt
+
+
+def routersAutoConfig(infos):
+    routers=[]
+    links=[]
+    for router in infos["routers"]:
+        for link in router["links"]:
+            if link not in links : 
+                links.append(link)
+    links.sort()
+    ipsRange={}
+    ipsCounter={}
+    i=0
+    j=0
+    for link in links:
+        ipsRange[str(link)]="192.168."+str(i)+"."
+        ipsCounter[str(link)]=j
+        j+=2
+        if j>=253 : 
+            i+=1
+            j=0
+    rnum=1
+    for router in infos["routers"]:
+        rname=router["name"]
+        interfaces=[]
+        interface={
+                "name" : "loopback 0",
+                "ip" : str(rnum)+"."+str(rnum)+"."+str(rnum)+"."+str(rnum),
+                "mask" : 30
+            }
+        interfaces.append(interface)
+        j=0
+        for link in router["links"]:  
+            ip=ipsRange[str(link)]+str(ipsCounter[str(link)])
+            ipsCounter[str(link)]+=1
+            iname="g"+str(j)+"/0"
+            interface={
+                "name" : iname,
+                "ip" : ip,
+                "mask" : 30
+            }
+            interfaces.append(interface)
+        newRouteur={
+            "name": rname,
+            "numero": rnum,
+            "interface": interfaces,
+        }
+        rnum+=1
+        routers.append(newRouteur)
+    return routers
+
+
+
+
+networkIpsCounter={}
+networks={}
+
+# Récupération des données du JSON
+infos = get_data_from_json("JSON/newtest.json")
+#print(json.dumps(configuration, indent=2))
+
+# Vérification des données
+if not check_data(infos):
+    sys.exit()
+
+# Création des Template
+with open("Template/template_router_basic.txt") as file:
+    baseTemplate = Template(file.read())
+with open("Template/template_router_interface.txt") as file:
+    interfaceTemplate = Template(file.read())
+with open("Template/template_router_interfaceOSPF.txt") as file:
+    interfaceOSPFTemplate = Template(file.read())
+with open("Template/template_router_vrfinterface.txt") as file:
+    vrfinterfaceTemplate = Template(file.read())
+with open("Template/template_router_end.txt") as file:
+    endTemplate = Template(file.read())
+
+# Rendu Template End
+rendered_end = endTemplate.render()
+
+routers=routersAutoConfig(infos)
+print(json.dumps(routers, indent=2))
+
+"""
+# Rendu Template Basic et Interface pour chaque router
+for router in routers:
+    rendered_base = baseTemplate.render(name=router["name"])
+    configsRouter = []
+    loopback=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
+    # Génération des configurations pour chaque interface
+    for interface in router["interface"]:
+        if interface["name"] == "loopback" : 
+            rendered_interface = interfaceTemplate.render(
+                name="loopback 0",
+                ip=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"],
+                mask=32
+            )  
+        elif "vrfConfig" not in interface:
+            networkIpsCounter[interface["network"]]=+1
+
+            if "ospfConfig" not in router:
+                rendered_interface = interfaceTemplate.render(
+                    name=interface["name"],
+                    ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                    mask=networks[interface["network"]]["mask"]
+                )
+            else:
+                rendered_interface = interfaceOSPFTemplate.render(
+                    name=interface["name"],
+                    ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                    mask=networks[interface["network"]]["mask"],
+                    PID = router["ospfConfig"]["PID"],
+                    area = router["ospfConfig"]["area"]
+                )
+
+        elif "vrfConfig" in interface:
+            networkIpsCounter[interface["network"]]=+1
+            rendered_interface = vrfinterfaceTemplate.render(
+                VRFname=interface["vrfConfig"]["name"],
+                name=interface["name"],
+                ip=networks[interface["network"]]["ip"]+str(networkIpsCounter[interface["network"]]),
+                mask=networks[interface["network"]]["mask"],
+                PID = router["ospfConfig"]["PID"],
+                area = router["ospfConfig"]["area"]
+            )
+
+
+        if "vrfConfig" in interface:
+            print("vrfConfig exists "+interface["name"])
+            configsRouter.append(vrf(interface["vrfConfig"]["name"],interface["vrfConfig"]["routeDistinguisher"],interface["vrfConfig"]["routeTarget"]))
+            configsRouter.append(vrfFamily(interface["vrfConfig"]["name"],interface["network"],configuration["globals"]["networks"],str(networkIpsCounter[interface["network"]]+1)))
+        else:
+            print("vrfConfig doesn't exists "+router["name"])
+        configsRouter.append(rendered_interface)
+
+    if "bgpConfig" in router:
+        print("bgpConfig exists "+router["name"])
+        configsRouter.append(bgp(router["bgpConfig"]["ASnumber"],router["bgpConfig"]["neighbors"]))
+    else:
+        print("bgpConfig doesn't exists "+router["name"])
+
+    if "ospfConfig" in router:
+        print("ospfConfig exists "+router["name"]+"\n")
+        loopback=router["numero"]+"."+router["numero"]+"."+router["numero"]+"."+router["numero"]
+        configsRouter.append(ospf(router["ospfConfig"]["PID"],loopback))
+    else:
+        print("ospfConfig doesn't exists "+router["name"])
+
+    # Ecriture des configurations pour chaque routeur
+    with open("Configuration/i" + router["numero"] + "_startup-config.cfg", "w") as config_file:
+        config_file.write(rendered_base)
+        for config in configsRouter:
+            config_file.write(config)
+        config_file.write(rendered_end)
+"""
