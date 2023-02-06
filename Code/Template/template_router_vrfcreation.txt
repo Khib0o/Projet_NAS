@@ -4,3 +4,4 @@ vrf definition {{ VPN }}
  address-family ipv4
  exit-address-family
 !
+
