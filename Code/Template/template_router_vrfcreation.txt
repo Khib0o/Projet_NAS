@@ -1,0 +1,6 @@
+vrf definition {{ VPN }}
+ rd {{ routeDistinguisher }}
+ route-target both {{ routeTarget }}
+ address-family ipv4
+ exit-address-family
+!

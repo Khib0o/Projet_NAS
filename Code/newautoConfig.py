@@ -79,16 +79,12 @@ with open("Template/template_router_vrfinterface.txt") as file:
     vrfinterfaceTemplate = Template(file.read())
 with open("Template/template_router_end.txt") as file:
     endTemplate = Template(file.read())
-with open("Template/test.txt") as file:
-    testTemplate = Template(file.read())
+with open("Template/template_router_vrfcreation.txt") as file:
+    vrfcreationTemplate = Template(file.read())
+
 
 # Rendu Template End
 rendered_end = endTemplate.render()
-
-
-# for network in configuration["globals"]["networks"]:#prépare à compter les ips déja paramétrées
-#     networkIpsCounter[network["name"]]=0
-#     networks[network["name"]]=network
 
 #On créé un dictionnaire qui a pour clé chacun des liens et valeur le nombre de routeurs à qui on a donné un adresse dans le ss-réseau correspondant
 ip_counter = {}
@@ -98,8 +94,10 @@ for router in configuration["routers"]:
 
 print(ip_counter)        
 
+ce_routers = {}
 
-# Rendu Template Basic et Interface pour chaque router
+
+
 for router in configuration["routers"]:
     interface = 1
     
@@ -157,6 +155,19 @@ for router in configuration["routers"]:
             configsRouter.append(rendered_interface)
             interface += 1
 
+        if classRouter == "PE":
+            for ce_router in configuration["routers"]:
+                if ce_router["classe"] == "CE":
+                    for link in router["links"]:
+                        if link in ce_router["links"]:
+                            print("PE Router {} is connected to CE Router {} with VPN {}".format(router["name"], ce_router["name"], ce_router["VPN"][0]))
+                            vpnNumber = str(ce_router["VPN"][0])
+                            rendered_interface = vrfcreationTemplate.render(
+                                VPN = "VPN"+vpnNumber,
+                                routeDistinguisher = vpnNumber+":"+vpnNumber,
+                                routeTarget = vpnNumber+":"+vpnNumber
+                            )
+                            configsRouter.append(rendered_interface)
 
     
     
