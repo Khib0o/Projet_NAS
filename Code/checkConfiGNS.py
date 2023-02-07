@@ -77,11 +77,10 @@ def creation_json(liste: List[Router], name_project: str):
 
 # Création des variables
 liste_router: List[Router] = []
-name_project: str = "Config"
+name_project: str = "project_type"
 
 # Spécifie le chemin absolu du dossier à lister
-folder_path = 'C:/Users/Yanni/Documents/Cours/4A/NAS/GNS/projNASv0.5/' + \
-    name_project + '/project-files/dynamips'
+folder_path = 'C:/Users/colin/GNS3/projects/' + name_project + '/project-files/dynamips'
 router_path = '/configs'
 
 # Obtient la liste de tous les fichiers et dossiers dans le dossier

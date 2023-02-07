@@ -1,0 +1,6 @@
+interface {{ name }}
+ {% if vrf_f %}vrf forwarding {{ name_vrf }}{% else %}!{% endif %}
+ ip address {{ ip }} {{ mask }}
+ {% if ospf %}ip ospf {{ processId }} area {{ zoneId }}{% else %}!{% endif %}
+ no shutdown
+!   

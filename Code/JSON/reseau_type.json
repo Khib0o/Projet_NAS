@@ -1,0 +1,352 @@
+{
+    "globals": {
+        "networks": [
+            {
+                "name": "coeur1",
+                "ip": "192.168.1.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur2",
+                "ip": "192.168.2.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur3",
+                "ip": "192.168.3.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur4",
+                "ip": "192.168.4.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur5",
+                "ip": "192.168.5.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur6",
+                "ip": "192.168.6.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur7",
+                "ip": "192.168.7.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "coeur8",
+                "ip": "192.168.8.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "client_red_1",
+                "ip": "192.168.9.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "client_blue_1",
+                "ip": "192.168.10.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "client_red_2",
+                "ip": "192.168.11.",
+                "mask": "255.255.255.0"
+            },
+            {
+                "name": "client_blue_2",
+                "ip": "192.168.12.",
+                "mask": "255.255.255.0"
+            }
+        ],
+        "ospf": {
+            "process_id": 42,
+            "area_id": 1
+        },
+        "bgp": {
+            "ASnumber": "1"
+        },
+        "vrf": {
+            "red": {
+                "RT": "100",
+                "RT_import": []
+            },
+            "blue": {
+                "RT": "200",
+                "RT_import": [
+                    "red",
+                    "green"
+                ]
+            },
+            "green": {
+                "RT": "300",
+                "RT_import": []
+            }
+        }
+    },
+    "routers": [
+        {
+            "name": "R1",
+            "numero": "1",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "coeur1"
+                },
+                {
+                    "name": "g2/0",
+                    "network": "coeur4"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur5"
+                },
+                {
+                    "name": "loopback"
+                }
+            ]
+        },
+        {
+            "name": "R2",
+            "numero": "2",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "coeur1"
+                },
+                {
+                    "name": "g2/0",
+                    "network": "coeur2"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur6"
+                },
+                {
+                    "name": "loopback"
+                }
+            ]
+        },
+        {
+            "name": "R3",
+            "numero": "3",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "coeur3"
+                },
+                {
+                    "name": "g2/0",
+                    "network": "coeur2"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur7"
+                },
+                {
+                    "name": "loopback"
+                }
+            ]
+        },
+        {
+            "name": "R4",
+            "numero": "4",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "coeur3"
+                },
+                {
+                    "name": "g2/0",
+                    "network": "coeur4"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur8"
+                },
+                {
+                    "name": "loopback"
+                }
+            ]
+        },
+        {
+            "name": "R5",
+            "numero": "5",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_red_1"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur5"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "neighbors": [
+                    "6",
+                    "7",
+                    "8"
+                ]
+            },
+            "vrfConfig": [
+                {
+                    "name": "red",
+                    "routeD": "10",
+                    "ip_neighbor": "client_red_1",
+                    "as_number_neighbor": "2"
+                }
+            ]
+        },
+        {
+            "name": "R6",
+            "numero": "6",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_blue_1"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur6"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "neighbors": [
+                    "5",
+                    "7",
+                    "8"
+                ]
+            },
+            "vrfConfig": [
+                {
+                    "name": "blue",
+                    "routeD": "20",
+                    "ip_neighbor": "client_blue_1",
+                    "as_number_neighbor": "3"
+                }
+            ]
+        },
+        {
+            "name": "R7",
+            "numero": "7",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_red_2"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur7"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "neighbors": [
+                    "5",
+                    "6",
+                    "8"
+                ]
+            },
+            "vrfConfig": [
+                {
+                    "name": "red",
+                    "routeD": "11",
+                    "ip_neighbor": "client_red_2",
+                    "as_number_neighbor": "4"
+                }
+            ]
+        },
+        {
+            "name": "R8",
+            "numero": "8",
+            "type": "coeur",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_blue_2"
+                },
+                {
+                    "name": "g3/0",
+                    "network": "coeur8"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "neighbors": [
+                    "5",
+                    "6",
+                    "7"
+                ]
+            },
+            "vrfConfig": [
+                {
+                    "name": "blue",
+                    "routeD": "21",
+                    "ip_neighbor": "client_blue_2",
+                    "as_number_neighbor": "5"
+                }
+            ]
+        },
+        {
+            "name": "R9",
+            "numero": "9",
+            "type": "client",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_blue_1"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "as_number": 3,
+                "neighbors": [
+                    "6"
+                ]
+            }
+        },
+        {
+            "name": "R10",
+            "numero": "10",
+            "type": "client",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client_blue_2"
+                },
+                {
+                    "name": "loopback"
+                }
+            ],
+            "bgpConfig": {
+                "as_number": 5,
+                "neighbors": [
+                    "8"
+                ]
+            }
+        }
+    ]
+}

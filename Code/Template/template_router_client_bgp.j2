@@ -1,0 +1,5 @@
+router bgp {{ as_number }}
+ bgp log-neighbor-changes
+ redistribute connected
+ neighbor {{ ip_neighbor }} remote-as {{ as_number_neighbor }}
+!

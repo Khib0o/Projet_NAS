@@ -15,7 +15,8 @@ def get_data_from_json(name_json):
 
 
 # Récupération de la configuration du projet GNS3
-configuration_gns3 = get_data_from_json("Correspondance/test.json")
+name_project = "project_type"
+configuration_gns3 = get_data_from_json("Correspondance/" + name_project + ".json")
 
 # Initialisation des constancte
 path_folder = "Configuration"

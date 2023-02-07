@@ -1,0 +1,5 @@
+address-family ipv4 vrf {{ name }}
+ neighbor {{ ip_neighbor }} remote-as {{ as_number_neighbor }}
+ neighbor {{ ip_neighbor }} activate
+ exit-address-family
+!
