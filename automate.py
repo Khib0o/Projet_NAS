@@ -102,7 +102,7 @@ def auto(RX):
     s.close()
 
 
-# prep()
+prep()
 # auto("R11")
 for h in hosts:
     auto(h)
