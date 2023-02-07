@@ -2,7 +2,7 @@
     "routers": [
         {
             "name": "R1",
-            "classe": "CE",
+            "classe": "P",
             "links": [
                 1
             ]
@@ -11,32 +11,25 @@
             "name": "R2",
             "classe": "P",
             "links": [
-                2,
-                5,
-                6
+                1
             ]
         },
         {
             "name": "R3",
             "classe": "PE",
             "links": [
-                1,
+                2,
+                3,
                 5
-            ],
-            "VPNs": [
-                [
-                    1,
-                    1
-                ]
             ]
         },
         {
             "name": "R4",
-            "classe": "P",
+            "classe": "PE",
             "links": [
                 2,
                 4,
-                7
+                6
             ]
         },
         {
@@ -44,28 +37,37 @@
             "classe": "PE",
             "links": [
                 3,
-                4
-            ],
-            "VPNs": [
-                [
-                    3,
-                    1
-                ]
+                4,
+                7,
+                8
             ]
         },
         {
-            "name": "R6",
+            "name": "R8",
+            "classe": "PE",
+            "links": [
+                5,
+                6
+            ]
+        },
+        {
+            "name": "R9",
             "classe": "CE",
             "links": [
-                3
+                7
+            ],
+            "VPN":[
+                1
             ]
         },
         {
-            "name": "R7",
-            "classe": "P",
+            "name": "R10",
+            "classe": "CE",
             "links": [
-                6,
-                7
+                8
+            ],
+            "VPN":[
+                1
             ]
         }
     ]
