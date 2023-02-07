@@ -77,7 +77,7 @@ def creation_json(liste: List[Router], name_project: str):
 
 # Création des variables
 liste_router: List[Router] = []
-name_project: str = "test"
+name_project: str = "nas_test_coeur"
 
 # Spécifie le chemin absolu du dossier à lister
 folder_path = 'C:/Users/colin/GNS3/projects/' + \

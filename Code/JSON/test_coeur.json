@@ -1,0 +1,82 @@
+{
+    "globals": {
+        "networks": [
+            {
+                "name": "coeur1",
+                "ip": "192.168.1.",
+                "mask": 24
+            },
+            {
+                "name": "coeur2",
+                "ip": "192.168.2.",
+                "mask": 24
+            },
+            {
+                "name": "coeur3",
+                "ip": "192.168.3.",
+                "mask": 24
+            },
+            {
+                "name": "coeur4",
+                "ip": "192.168.4.",
+                "mask": 24
+            }
+        ]
+    },
+    "routers": [
+        {
+            "name": "R1",
+            "numero": "1",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client1"
+                },
+                {
+                    "name": "g2/0",
+                    "network": "coeur"
+                }
+            ],
+            "bgpConfig": {
+                "ASnumber": "1",
+                "neighbors": [
+                    "2",
+                    "3"
+                ]
+            }
+        },
+        {
+            "name": "R2",
+            "numero": "2",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "coeur"
+                },
+                {
+                    "name": "loopback"
+                }
+            ]
+        },
+        {
+            "name": "R3",
+            "numero": "3",
+            "interface": [
+                {
+                    "name": "g2/0",
+                    "network": "coeur"
+                }
+            ]
+        },
+        {
+            "name": "R4",
+            "numero": "4",
+            "interface": [
+                {
+                    "name": "g1/0",
+                    "network": "client1"
+                }
+            ]
+        }
+    ]
+}

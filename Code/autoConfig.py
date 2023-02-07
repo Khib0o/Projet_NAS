@@ -29,16 +29,12 @@ def bgp(asnumber,neighbors):
     txt+="!\n"
     return txt
 
-
-
-
 networkIpsCounter={}
 networks={}
 
-
-
 # Récupération des données du JSON
 configuration = get_data_from_json("JSON/test.json")
+# Affiche les données d'entrée
 #print(json.dumps(configuration, indent=2))
 
 # Vérification des données
@@ -55,7 +51,6 @@ with open("Template/template_router_end.txt") as file:
 
 # Rendu Template End
 rendered_end = endTemplate.render()
-
 
 for network in configuration["globals"]["networks"]:#prépare à compter les ips déja paramétrées
     networkIpsCounter[network["name"]]=0
