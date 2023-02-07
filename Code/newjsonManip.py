@@ -11,6 +11,7 @@ def get_data_from_json(name_json):
     else:
         print("le fichier test.json n'existe pas")
 
+#prends une liste d'entiers et retourne l'entier le plus haut auquel on ajoute 1
 def determineNextlinkNumber(links):
     nextLink=1
     for link in links:
@@ -18,6 +19,7 @@ def determineNextlinkNumber(links):
             nextLink=link+1
     return nextLink
 
+#prend en entrée la liste des routeurs et renvoit la liste des liens triés
 def getAllLinks(routers):
     links=[]
     for router in routers:
@@ -26,6 +28,8 @@ def getAllLinks(routers):
                 links.append(link)
     links.sort()
     return links
+
+#Saisie utilisateur de la classe du routeur
 def choixClasseRouteur():
     print("1 : CE") 
     print("2 : PE") 
@@ -40,7 +44,8 @@ def choixClasseRouteur():
     else:
         print("choix invalide, veuillez saisir un nombre entre 1 et 3 ")   
         return choixClasseRouteur()
-    
+
+#Saisie utilisateur du nom du routeur
 def nomRouteur(routers):
     rname=input("Nom du Routeur : ")
     for router in routers:
@@ -49,17 +54,17 @@ def nomRouteur(routers):
             return nomRouteur(routers)
     return rname
 
+#récupère l'existant
 configuration = get_data_from_json("JSON/newtest.json")
-#print("Configuration actuelle : \n"+json.dumps(configuration, indent=2))
 
 
 print("Configuration actuelle des routeurs: \n"+json.dumps(configuration["routers"], indent=2))
-
 print("-------------------")
 print("0 : ne rien faire/quitter ")
 print("1 : ajouter un routeur     | 2 supprimer un routeur")
 print("3 : créer un nouveau lien  | 4 supprimer un lien")
 print("5 : créer une VRF          | 6 supprimer une VRF\n")
+
 choice = input("Que voulez vous faire ? : ")
 while choice!="0":
     if choice=="1":#ajouter un routeur
@@ -142,7 +147,6 @@ while choice!="0":
             print(str(link)+" : lien "+str(link))
         print("Entrer 0 pour annuler")
         linkSelected = input("Sélectionner le lien à supprimer ou annuler : ")
-
         if linkSelected!="0":
             for i in range(len(configuration["routers"])):
                 for j in range(len(configuration["routers"][i]["links"])):
@@ -185,11 +189,16 @@ while choice!="0":
                 if configuration["routers"][int(rselected)-1]["VPNs"]==[]:
                     del configuration["routers"][int(rselected)-1]["VPNs"]
 
+    if choice=="7":#voir la config actuelle des routeurs
+        print("Configuration actuelle des routeurs: \n"+json.dumps(configuration["routers"], indent=2))
+
+
     with open("JSON/newtest.json", "w") as json_file: 
         json.dump(configuration,json_file,indent=4)
     print("-------------------")
     print("0 : ne rien faire")
     print("1 : ajouter un routeur     | 2 supprimer un routeur")
     print("3 : créer un nouveau lien  | 4 supprimer un lien")
-    print("5 : créer une VRF          | 6 supprimer une VRF (pas encore fait)\n")
+    print("5 : créer une VRF          | 6 supprimer une VRF")
+    print("7 : Afficher la config actuelle \n")
     choice = input("Que voulez vous faire ? : ")
