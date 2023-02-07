@@ -157,13 +157,16 @@ for router in configuration["routers"]:
 
         if classRouter == "PE":
             listVPN =[]
+            i=0
             for ce_router in configuration["routers"]:
                 if ce_router["classe"] == "CE":
                     for link in router["links"]:
                         if link in ce_router["links"]:
-                            print("PE Router {} is connected to CE Router {} with VPN {}".format(router["name"], ce_router["name"], ce_router["VPN"][0]))
-                            vpnNumber = str(ce_router["VPN"][0])
+                            
+                            print("PE Router {} is connected to CE Router {} with VPN {}".format(router["name"], ce_router["name"], ce_router["VPN"][i]))
+                            vpnNumber = str(ce_router["VPN"][i])
                             if vpnNumber not in listVPN:
+                                i+=1
                                 listVPN.append(vpnNumber)
                                 rendered_interface = vrfcreationTemplate.render(
                                     VPN = "VPN"+vpnNumber,
