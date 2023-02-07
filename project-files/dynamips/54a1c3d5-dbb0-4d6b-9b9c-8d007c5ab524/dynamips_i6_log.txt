@@ -1,0 +1,33 @@
+Dec 14 07:33:06.142 HYPERVISOR: Release 0.2.22-amd64/Linux (tag 2022052400)
+Dec 14 07:33:06.142 HYPERVISOR: Started on IP = localhost, TCP port = 41389.
+Dec 14 07:33:06.151 HYPERVISOR: exec_cmd: hypervisor version 
+Dec 14 07:33:06.151 HYPERVISOR: exec_cmd: hypervisor working_dir /home/khib0o/4TC/NAS/Projet/project-files/dynamips 
+Dec 14 07:33:06.151 GENERAL: working_dir=/home/khib0o/4TC/NAS/Projet/project-files/dynamips
+Dec 14 07:33:06.151 HYPERVISOR: exec_cmd: hypervisor working_dir /home/khib0o/4TC/NAS/Projet/project-files/dynamips/64b2f76e-5387-48fb-85d6-5dc682a6425d 
+Dec 14 07:33:06.151 GENERAL: working_dir=/home/khib0o/4TC/NAS/Projet/project-files/dynamips/64b2f76e-5387-48fb-85d6-5dc682a6425d
+Dec 14 07:33:06.151 HYPERVISOR: exec_cmd: vm create R4 4 c7200 
+Dec 14 07:33:06.151 VM: VM R4 created.
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm set_con_tcp_port R4 5003 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: c7200 get_mac_addr R4 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm slot_add_binding R4 0 0 C7200-IO-FE 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm set_disk0 R4 0 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.152 HYPERVISOR: exec_cmd: vm set_idle_pc R4 0x606df838 
+Dec 14 07:33:06.153 HYPERVISOR: exec_cmd: vm set_ios R4 /home/khib0o/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Dec 14 07:33:06.153 HYPERVISOR: exec_cmd: c7200 set_mac_addr R4 ca04.1071.0000 
+Dec 14 07:33:06.153 HYPERVISOR: exec_cmd: vm set_nvram R4 512 
+Dec 14 07:33:06.153 HYPERVISOR: exec_cmd: vm set_ram R4 512 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm slot_add_binding R4 1 0 PA-GE 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm slot_add_binding R4 2 0 PA-GE 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.154 HYPERVISOR: exec_cmd: vm slot_add_binding R4 3 0 PA-GE 
+Dec 14 07:33:06.382 HYPERVISOR: exec_cmd: vm get_status R4 
+Dec 14 07:33:06.382 HYPERVISOR: exec_cmd: vm extract_config R4 
+Dec 14 07:33:06.435 HYPERVISOR: exec_cmd: vm delete R4 
+Dec 14 07:33:06.435 VM: VM R4 destroyed.
+Dec 14 07:33:06.435 HYPERVISOR: exec_cmd: hypervisor stop 
+Dec 14 07:33:06.651 HYPERVISOR: Stopped.
+Dec 14 07:33:06.651 GENERAL: reset done.

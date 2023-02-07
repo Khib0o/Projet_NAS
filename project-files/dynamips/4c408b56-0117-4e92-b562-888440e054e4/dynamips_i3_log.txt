@@ -1,0 +1,33 @@
+Dec 14 07:33:06.066 HYPERVISOR: Release 0.2.22-amd64/Linux (tag 2022052400)
+Dec 14 07:33:06.066 HYPERVISOR: Started on IP = localhost, TCP port = 43559.
+Dec 14 07:33:06.068 HYPERVISOR: exec_cmd: hypervisor version 
+Dec 14 07:33:06.068 HYPERVISOR: exec_cmd: hypervisor working_dir /home/khib0o/4TC/NAS/Projet/project-files/dynamips 
+Dec 14 07:33:06.068 GENERAL: working_dir=/home/khib0o/4TC/NAS/Projet/project-files/dynamips
+Dec 14 07:33:06.068 HYPERVISOR: exec_cmd: hypervisor working_dir /home/khib0o/4TC/NAS/Projet/project-files/dynamips/be068efa-ac72-4a4e-a153-119897d68af8 
+Dec 14 07:33:06.068 GENERAL: working_dir=/home/khib0o/4TC/NAS/Projet/project-files/dynamips/be068efa-ac72-4a4e-a153-119897d68af8
+Dec 14 07:33:06.068 HYPERVISOR: exec_cmd: vm create R1 1 c7200 
+Dec 14 07:33:06.068 VM: VM R1 created.
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5000 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: c7200 get_mac_addr R1 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm slot_add_binding R1 0 0 C7200-IO-FE 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.069 HYPERVISOR: exec_cmd: vm set_idle_pc R1 0x606df838 
+Dec 14 07:33:06.070 HYPERVISOR: exec_cmd: vm set_ios R1 /home/khib0o/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Dec 14 07:33:06.070 HYPERVISOR: exec_cmd: c7200 set_mac_addr R1 ca01.1041.0000 
+Dec 14 07:33:06.070 HYPERVISOR: exec_cmd: vm set_nvram R1 512 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm set_ram R1 512 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm slot_add_binding R1 1 0 PA-GE 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm slot_add_binding R1 2 0 PA-GE 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.071 HYPERVISOR: exec_cmd: vm slot_add_binding R1 3 0 PA-GE 
+Dec 14 07:33:06.381 HYPERVISOR: exec_cmd: vm get_status R1 
+Dec 14 07:33:06.382 HYPERVISOR: exec_cmd: vm extract_config R1 
+Dec 14 07:33:06.383 HYPERVISOR: exec_cmd: vm delete R1 
+Dec 14 07:33:06.383 VM: VM R1 destroyed.
+Dec 14 07:33:06.383 HYPERVISOR: exec_cmd: hypervisor stop 
+Dec 14 07:33:06.568 HYPERVISOR: Stopped.
+Dec 14 07:33:06.568 GENERAL: reset done.
