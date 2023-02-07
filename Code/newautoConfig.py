@@ -88,9 +88,11 @@ rendered_end = endTemplate.render()
 
 #On créé un dictionnaire qui a pour clé chacun des liens et valeur le nombre de routeurs à qui on a donné un adresse dans le ss-réseau correspondant
 ip_counter = {}
+i =0
 for router in configuration["routers"]:
     for link in router["links"]:
-        ip_counter.setdefault(link,0)
+        ip_counter.setdefault(link[0],0)
+        i+=1
 
 print(ip_counter)        
 
@@ -121,10 +123,10 @@ for router in configuration["routers"]:
         #Attribution des adresses IP pour chaque interface en fonction des liens et des attributions déjà faites
         
         for link in router["links"]:
-            ip_counter[link] +=1
+            ip_counter[link[0]] +=1
             rendered_interface = interfaceTemplate.render(
-                name="g"+str(interface)+"/0",
-                ip="192.168."+str(link)+"."+str(ip_counter[link]),
+                name=link[interface][1],
+                ip="192.168."+str(link[0])+"."+str(ip_counter[link[0]]),
                 mask="255.255.255.0"
             )
             configsRouter.append(rendered_interface)
@@ -144,10 +146,10 @@ for router in configuration["routers"]:
 
         
         for link in router["links"]:
-            ip_counter[link] +=1
+            ip_counter[link[0]] +=1
             rendered_interface = interfaceTemplate.render(
-                name="g"+str(interface)+"/0",
-                ip="192.168."+str(link)+"."+str(ip_counter[link]),
+                name=link[interface][1],
+                ip="192.168."+str(link[0])+"."+str(ip_counter[link[0]]),
                 mask="255.255.255.0",
                 PID = "42",
                 area = "1"
@@ -162,9 +164,8 @@ for router in configuration["routers"]:
                 if ce_router["classe"] == "CE":
                     for link in router["links"]:
                         if link in ce_router["links"]:
-                            
-                            print("PE Router {} is connected to CE Router {} with VPN {}".format(router["name"], ce_router["name"], ce_router["VPN"][i]))
-                            vpnNumber = str(ce_router["VPN"][i])
+                            print("PE Router {} is connected to CE Router {} with VPN {}".format(router["name"], ce_router["name"], ce_router["VPN"][i][1]))
+                            vpnNumber = str(ce_router["VPN"][i][1])
                             if vpnNumber not in listVPN:
                                 i+=1
                                 listVPN.append(vpnNumber)

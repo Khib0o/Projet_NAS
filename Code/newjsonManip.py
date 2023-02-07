@@ -47,6 +47,7 @@ def choixClasseRouteur():
 
 #Saisie utilisateur du nom du routeur
 def nomRouteur(routers):
+    print("yo")
     rname=input("Nom du Routeur : ")
     for router in routers:
         if rname==router["name"]:
@@ -66,6 +67,7 @@ print("3 : créer un nouveau lien  | 4 supprimer un lien")
 print("5 : créer une VRF          | 6 supprimer une VRF\n")
 
 choice = input("Que voulez vous faire ? : ")
+print(choice)
 while choice!="0":
     if choice=="1":#ajouter un routeur
         rname=nomRouteur(configuration["routers"])
