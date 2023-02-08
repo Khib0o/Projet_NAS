@@ -46,6 +46,7 @@ else:
     print("Erreur nombre de routeurs différents à la destination ")
     sys.exit()
 
+couter_move = 0
 # Déplacement des fichiers de configurations
 for name_file in os.listdir(path_folder):
     if os.path.isfile(os.path.join(path_folder, name_file)):
@@ -59,9 +60,12 @@ for name_file in os.listdir(path_folder):
                     if "hostname" in words:
                         name_router = words[words.index("hostname")+1]
                         if router["label_router"] == name_router and router["name_file"] == name_file:
-                            print("Trouvé")
+                            # print("Trouvé")
                             find = True
             if find:
                 # os.replace(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
                 shutil.copy(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
-                print("Déplacé")
+                couter_move +=1
+                # print("Déplacé")
+
+print("Fichier déplacé : "+str(couter_move)+"/"+str(counter_file))

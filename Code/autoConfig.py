@@ -56,20 +56,17 @@ def create_vrf(name, as_number, route_d, vrf_config):
     txt = "!\n!--- " + name + " commands.\n!\n"
     txt += "vrf definition " + name + "\n"
     txt += " rd " + as_number + ":" + route_d + "\n"
-    txt += " route-target import " + as_number + \
-        ":" + vrf_config[name]["RT"] + "\n"
-    txt += " route-target export " + as_number + \
-        ":" + vrf_config[name]["RT"] + "\n"
+    txt += " route-target export " + as_number + ":" + vrf_config[name]["RT"] + "\n"
+    txt += " route-target import " + as_number + ":" + vrf_config[name]["RT"] + "\n"
     for color in vrf_config[name]["RT_import"]:
-        txt += " route-target export " + as_number + \
-            ":" + vrf_config[color]["RT"] + "\n"
+        txt += " route-target import " + as_number + ":" + vrf_config[color]["RT"] + "\n"
     txt += "address-family ipv4\n"
     txt += " exit-address-family\n"
     txt += "!\n"
     return txt
 
 # Récupération des données du JSON
-configuration = get_data_from_json("JSON/reseau_type_2.json")
+configuration = get_data_from_json("JSON/reseau_type_3.json")
 # print(json.dumps(configuration, indent=2))
 
 # Vérification des données
@@ -181,11 +178,11 @@ for router in configuration["routers"]:
         for vrf in router["vrfConfig"]:
             i += 1
             rendered_vfr_f = vrfFTemplate.render(
-            name=vrf["name"],
-            ip_neighbor=networks[vrf["ip_neighbor"]]["ip"]+str(network_ip_counter[vrf["ip_neighbor"]]+i),
-            as_number_neighbor=vrf["as_number_neighbor"]
-        )
-        configsRouter.append(rendered_vfr_f)
+                name=vrf["name"],
+                ip_neighbor=networks[vrf["ip_neighbor"]]["ip"]+"2",
+                as_number_neighbor=vrf["as_number_neighbor"]
+            )
+            configsRouter.append(rendered_vfr_f+"\n")
 
     # Ecriture des configurations pour chaque routeur
     with open("Configuration/i" + numero_router + "_startup-config.cfg", "w") as config_file:
