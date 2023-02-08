@@ -69,7 +69,7 @@ def create_vrf(name, as_number, route_d, vrf_config):
     return txt
 
 # Récupération des données du JSON
-configuration = get_data_from_json("JSON/reseau_type.json")
+configuration = get_data_from_json("JSON/reseau_type_2.json")
 # print(json.dumps(configuration, indent=2))
 
 # Vérification des données
