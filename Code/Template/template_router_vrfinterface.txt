@@ -1,7 +1,0 @@
-interface {{ name }}
-vrf forwarding {{ VRFname }}
- ip address {{ ip }} {{ mask }}
- ip ospf {{ PID }} area {{ area }}
- no shutdown
-!
-
