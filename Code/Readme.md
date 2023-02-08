@@ -9,12 +9,11 @@ Cette version marche dans tous les cas, mais le JSON est long et pas optimisé
 Exemple de JSON
 
 <aside>
-💡 reseau_type.json : 4P - 4PE - 2CE - 1 Client
+reseau_type.json : 4P - 4PE - 2CE - 1 Client
 
 reseau_type_2.json : 4P - 4PE - 4CE - 2 Client (Partagé car un maison mère)
 
 reseau_type_3.json : 4P - 4PE - 6CE - 3 Client  (Semi-partagé car un maison mère)
-
 </aside>
 
 ### Etape de mise en place
