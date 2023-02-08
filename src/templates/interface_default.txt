@@ -1,0 +1,5 @@
+interface {{name}}
+ {{vrf}}ip address {{IP}} 255.255.255.0
+ ip ospf {{ospf}} area {{ospfNumber}}
+ no shutdown
+!

@@ -1,0 +1,7 @@
+vrf definition {{name}}
+ rd {{RD}}
+ {{RTs}}
+ !
+ address-family ipv4
+ exit-address-family
+!

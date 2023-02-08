@@ -1,0 +1,4 @@
+router ospf {{ospf}}
+ router-id {{loopback}}
+ mpls ldp autoconfig
+!

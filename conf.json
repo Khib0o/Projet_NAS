@@ -1,0 +1,24 @@
+{
+    "routers": [
+       
+        {"name": "R1","classe": "CE","links": [[1,"g1/0"]], "AS_BGP" : 2},
+
+        {"name": "R2","classe": "CE","links": [[2,"g1/0"]], "AS_BGP" : 3},
+
+        {"name": "R3","classe": "PE","links": [[1,"g1/0"],[2,"g2/0"],[3,"g3/0"]],"VPN":[[1,"g1/0"],[2,"g2/0"]]},
+
+        {"name": "R4","classe": "P","links": [[3,"g1/0"],[4,"g2/0"],[5,"g3/0"]]},
+
+        {"name": "R5","classe": "P","links": [[6,"g1/0"],[4,"g2/0"]]},
+
+        {"name": "R6","classe": "PE","links": [[6,"g1/0"],[7,"g2/0"],[8,"g3/0"]],"VPN":[[1,"g3/0"],[2,"g2/0"]]},
+
+        {"name": "R7","classe": "CE","links": [[8,"g2/0"]], "AS_BGP" : 4},
+        
+        {"name": "R8","classe": "CE","links": [[7,"g1/0"]], "AS_BGP" : 5},
+
+        {"name": "R9","classe": "PE","links": [[9,"g1/0"],[5,"g2/0"]],"VPN":[[1,"g1/0"],[2,"g1/0"]]},
+
+        {"name": "R10","classe": "CE","links": [[9,"g1/0"]], "AS_BGP" : 6}
+    ]
+}

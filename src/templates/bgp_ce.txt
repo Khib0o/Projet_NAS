@@ -1,0 +1,4 @@
+router bgp {{asNumber}}
+ bgp log-neighbor-changes
+ redistribute connected
+ {{neighbors}}
