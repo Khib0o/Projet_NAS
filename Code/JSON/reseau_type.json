@@ -1,67 +1,5 @@
 {
     "globals": {
-        "networks": [
-            {
-                "name": "coeur1",
-                "ip": "192.168.1.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur2",
-                "ip": "192.168.2.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur3",
-                "ip": "192.168.3.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur4",
-                "ip": "192.168.4.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur5",
-                "ip": "192.168.5.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur6",
-                "ip": "192.168.6.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur7",
-                "ip": "192.168.7.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "coeur8",
-                "ip": "192.168.8.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "client_red_1",
-                "ip": "192.168.9.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "client_blue_1",
-                "ip": "192.168.10.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "client_red_2",
-                "ip": "192.168.11.",
-                "mask": "255.255.255.0"
-            },
-            {
-                "name": "client_blue_2",
-                "ip": "192.168.12.",
-                "mask": "255.255.255.0"
-            }
-        ],
         "ospf": {
             "process_id": 42,
             "area_id": 1
@@ -90,107 +28,87 @@
     "routers": [
         {
             "name": "R1",
-            "numero": "1",
-            "type": "coeur",
+            "type": "P",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "coeur1"
+                    "network": "P_1"
                 },
                 {
                     "name": "g2/0",
-                    "network": "coeur4"
+                    "network": "P_4"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur5"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_5"
                 }
             ]
         },
         {
             "name": "R2",
-            "numero": "2",
-            "type": "coeur",
+            "type": "P",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "coeur1"
+                    "network": "P_1"
                 },
                 {
                     "name": "g2/0",
-                    "network": "coeur2"
+                    "network": "P_2"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur6"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_6"
                 }
             ]
         },
         {
             "name": "R3",
-            "numero": "3",
-            "type": "coeur",
+            "type": "P",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "coeur3"
+                    "network": "P_3"
                 },
                 {
                     "name": "g2/0",
-                    "network": "coeur2"
+                    "network": "P_2"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur7"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_7"
                 }
             ]
         },
         {
             "name": "R4",
-            "numero": "4",
-            "type": "coeur",
+            "type": "P",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "coeur3"
+                    "network": "P_3"
                 },
                 {
                     "name": "g2/0",
-                    "network": "coeur4"
+                    "network": "P_4"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur8"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_8"
                 }
             ]
         },
         {
             "name": "R5",
-            "numero": "5",
-            "type": "coeur",
+            "type": "PE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_red_1"
+                    "network": "CE_red_1"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur5"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_5"
                 }
             ],
             "bgpConfig": {
@@ -204,26 +122,22 @@
                 {
                     "name": "red",
                     "routeD": "10",
-                    "ip_neighbor": "client_red_1",
+                    "ip_neighbor": "CE_red_1",
                     "as_number_neighbor": "2"
                 }
             ]
         },
         {
             "name": "R6",
-            "numero": "6",
-            "type": "coeur",
+            "type": "PE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_blue_1"
+                    "network": "CE_blue_1"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur6"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_6"
                 }
             ],
             "bgpConfig": {
@@ -237,26 +151,22 @@
                 {
                     "name": "blue",
                     "routeD": "20",
-                    "ip_neighbor": "client_blue_1",
+                    "ip_neighbor": "CE_blue_1",
                     "as_number_neighbor": "3"
                 }
             ]
         },
         {
             "name": "R7",
-            "numero": "7",
-            "type": "coeur",
+            "type": "PE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_red_2"
+                    "network": "CE_red_2"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur7"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_7"
                 }
             ],
             "bgpConfig": {
@@ -270,26 +180,22 @@
                 {
                     "name": "red",
                     "routeD": "11",
-                    "ip_neighbor": "client_red_2",
+                    "ip_neighbor": "CE_red_2",
                     "as_number_neighbor": "4"
                 }
             ]
         },
         {
             "name": "R8",
-            "numero": "8",
-            "type": "coeur",
+            "type": "PE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_blue_2"
+                    "network": "CE_blue_2"
                 },
                 {
                     "name": "g3/0",
-                    "network": "coeur8"
-                },
-                {
-                    "name": "loopback"
+                    "network": "PE_8"
                 }
             ],
             "bgpConfig": {
@@ -303,22 +209,18 @@
                 {
                     "name": "blue",
                     "routeD": "21",
-                    "ip_neighbor": "client_blue_2",
+                    "ip_neighbor": "CE_blue_2",
                     "as_number_neighbor": "5"
                 }
             ]
         },
         {
             "name": "R9",
-            "numero": "9",
-            "type": "client",
+            "type": "CE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_blue_1"
-                },
-                {
-                    "name": "loopback"
+                    "network": "CE_blue_1"
                 }
             ],
             "bgpConfig": {
@@ -330,15 +232,11 @@
         },
         {
             "name": "R10",
-            "numero": "10",
-            "type": "client",
+            "type": "CE",
             "interface": [
                 {
                     "name": "g1/0",
-                    "network": "client_blue_2"
-                },
-                {
-                    "name": "loopback"
+                    "network": "CE_blue_2"
                 }
             ],
             "bgpConfig": {

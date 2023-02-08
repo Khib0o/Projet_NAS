@@ -64,3 +64,4 @@ for name_file in os.listdir(path_folder):
             if find:
                 # os.replace(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
                 shutil.copy(path_folder+'/'+name_file, router["path_file"]+'/'+name_file)
+                print("Déplacé")
