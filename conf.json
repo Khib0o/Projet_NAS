@@ -1,24 +1,57 @@
 {
     "routers": [
-       
-        {"name": "R1","classe": "CE","links": [[1,"g1/0"]], "AS_BGP" : 2},
+   
+        {"name": "R1","classe": "P","links": [[1,"g1/0"], [2,"g2/0"], [3,"g3/0"]]},
 
-        {"name": "R2","classe": "CE","links": [[2,"g1/0"]], "AS_BGP" : 3},
+        {"name": "R2","classe": "P","links": [[4,"g1/0"], [1,"g2/0"], [5,"g3/0"]]},
 
-        {"name": "R3","classe": "PE","links": [[1,"g1/0"],[2,"g2/0"],[3,"g3/0"]],"VPN":[[1,"g1/0"],[2,"g2/0"]]},
+        {"name": "R3","classe": "P","links": [[6,"g1/0"], [7,"g2/0"], [8,"g3/0"]]},
 
-        {"name": "R4","classe": "P","links": [[3,"g1/0"],[4,"g2/0"],[5,"g3/0"]]},
+        {"name": "R4","classe": "P","links": [[8,"g1/0"], [9,"g2/0"], [10,"g3/0"]]},
 
-        {"name": "R5","classe": "P","links": [[6,"g1/0"],[4,"g2/0"]]},
+        {"name": "R5","classe": "P","links": [[11,"g1/0"], [9,"g2/0"], [5,"g3/0"]]},
 
-        {"name": "R6","classe": "PE","links": [[6,"g1/0"],[7,"g2/0"],[8,"g3/0"]],"VPN":[[1,"g3/0"],[2,"g2/0"]]},
+        {"name": "R6","classe": "P","links": [[2,"g1/0"], [12,"g2/0"], [7,"g3/0"]]},
 
-        {"name": "R7","classe": "CE","links": [[8,"g2/0"]], "AS_BGP" : 4},
-        
-        {"name": "R8","classe": "CE","links": [[7,"g1/0"]], "AS_BGP" : 5},
+        {"name": "R7","classe": "P","links": [[4,"g1/0"], [6,"g2/0"], [14,"g3/0"]]},
 
-        {"name": "R9","classe": "PE","links": [[9,"g1/0"],[5,"g2/0"]],"VPN":[[1,"g1/0"],[2,"g1/0"]]},
+        {"name": "R8","classe": "P","links": [[12,"g1/0"], [11,"g2/0"], [13,"g3/0"]]},
 
-        {"name": "R10","classe": "CE","links": [[9,"g1/0"]], "AS_BGP" : 6}
+        {"name": "R9","classe": "P","links": [[14,"g1/0"], [15,"g2/0"], [16,"g3/0"]]},
+
+        {"name": "R10","classe": "P","links": [[10,"g1/0"], [17,"g2/0"], [18,"g3/0"]]},
+
+        {"name": "R11","classe": "P","links": [[3,"g1/0"], [21,"g2/0"]]},
+
+        {"name": "R12","classe": "P","links": [[13,"g1/0"], [20,"g2/0"], [19,"g3/0"]]},
+
+        {"name": "R13","classe": "PE","links": [[15,"g1/0"], [24,"g2/0"]], "VPN":[[1, "g2/0"]]},
+
+        {"name": "R14","classe": "PE","links": [[16,"g1/0"], [25,"g2/0"]], "VPN":[[2, "g2/0"]]},
+
+        {"name": "R15","classe": "PE","links": [[19,"g1/0"], [28,"g2/0"]], "VPN":[[2, "g2/0"]]},
+
+        {"name": "R16","classe": "PE","links": [[20,"g1/0"], [29,"g2/0"]], "VPN":[[1, "g2/0"]]},
+
+        {"name": "R17","classe": "PE","links": [[17,"g1/0"], [26,"g2/0"]], "VPN":[[3, "g2/0"]]},
+
+        {"name": "R18","classe": "PE","links": [[18,"g2/0"], [27,"g3/0"]], "VPN":[[3, "g3/0"]]},
+
+        {"name": "R19","classe": "PE","links": [[21,"g1/0"], [22,"g2/0"], [23,"g3/0"]], "VPN":[[3, "g2/0"],[1, "g3/0"],[2, "g3/0"],[3, "g3/0"]]},
+
+        {"name": "R21","classe": "CE","links": [[24,"g1/0"]], "AS_BGP": 2},
+
+        {"name": "R22","classe": "CE","links": [[25,"g3/0"]], "AS_BGP": 3},
+
+        {"name": "R23","classe": "CE","links": [[27,"g1/0"], [26,"g2/0"]], "AS_BGP": 4},
+
+        {"name": "R25","classe": "CE","links": [[29,"g1/0"]], "AS_BGP": 5},
+
+        {"name": "R26","classe": "CE","links": [[28,"g1/0"]], "AS_BGP": 6},
+
+        {"name": "R27","classe": "CE","links": [[22,"g2/0"]], "AS_BGP": 7},
+
+        {"name": "R28","classe": "CE","links": [[23,"g1/0"]], "AS_BGP": 8}
+
     ]
 }
